@@ -1,0 +1,95 @@
+
+
+  <% if (alert) { %>
+    <script>
+      Swal.fire({
+        icon: '<%= alert.icon %>',
+        title: '<%= alert.title %>',
+        text: '<%= alert.text %>',
+      });
+    </script>
+  <% } %>
+  <section class="vh-100">
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+            class="img-fluid" alt="Sample image">
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <form action="/auth/login" method="POST" class="ui huge form">
+            <!-- Email input -->
+            <div class="field">
+              <div class="ui left icon input">
+                <input type="text" id="username" name="username" class="form-control form-control-lg"
+                  placeholder="Ingresar nombre de usuario" />
+                  <i class="user icon"></i>  
+                
+              </div>
+            </div>
+  
+            <!-- Password input -->
+            <div class="field">
+              <div class="ui left icon input">
+                <input type="password" id="password" name="password" class="form-control form-control-lg"
+                  placeholder="Ingresar contraseña" />
+                  <i class="eye link icon"></i> 
+              </div>
+            </div>
+  
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- Checkbox -->
+              <div class="form-check mb-0">
+                <input class="form-check-input me-2" type="checkbox" value="" id="rememberMe" />
+                <label class="form-check-label" for="checkbox">
+                  Recordarme
+                </label>
+              </div>
+              <a href="/auth/account_recovery" class="text-body">Olvidaste tu contraseña?</a>
+            </div>
+  
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="submit" id="submitLogin" class="ui big blue button btn btn-primary btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;" onclick="loginValidation(event)">Iniciar Sesiòn</button>
+              <p class="small fw-bold mt-2 pt-1 mb-0">No tienes una cuenta? <a href="/auth/register"
+                  class="link-danger">Registrate</a></p>
+            </div>
+           
+  
+          </form>
+        </div>
+      </div>
+    </div>
+   
+  </section>
+    <!-- MDB -->
+  <script>
+    // Al cargar la página, verifica si hay una cookie para el nombre de usuario
+    window.onload = function() {
+      const rememberedUsername = Cookies.get('rememberedUsername');
+      if (rememberedUsername) {
+        document.querySelector('input[name="username"]').value = rememberedUsername;
+      }
+    }
+
+    // Si el usuario marca la casilla "Recordarme", guarda el valor del nombre de usuario en una cookie
+    const rememberMeCheckbox = document.getElementById('rememberMe');
+    const usernameInput = document.querySelector('input[name="username"]');
+
+    // usernameInput.addEventListener('change', function() {
+    //   if (usernameInput.value !== '') {
+    //     rememberMeCheckbox.checked = true;
+    //   } else {
+    //     rememberMeCheckbox.checked = false;
+    //   }
+    // });
+
+    rememberMeCheckbox.addEventListener('change', function() {
+      console.log(usernameInput.value)
+      if (this.checked) {
+        Cookies.set('rememberedUsername', usernameInput.value, { expires: 7 }); // Guardar durante 7 días
+      } else {
+        Cookies.remove('rememberedUsername');
+      }
+    });
+  </script>
